@@ -5,6 +5,7 @@ from io import BytesIO
 from fastapi.middleware.cors import CORSMiddleware
 import os
 from fastapi.responses import StreamingResponse
+import uuid
 
 app = FastAPI(description="Usa el marco tu team en Facebook", summary="Elige tu Team en Facebook")
 app.add_middleware(
@@ -28,7 +29,7 @@ async def overlay_photo(
     result = apply_frame(BytesIO(photo_content), frame_name)
 
     return StreamingResponse(BytesIO(result), media_type="image/jpeg",
-                             headers={"Content-Disposition": f"attachment; filename={frame_name}_overlay.jpg"})
+                             headers={"Content-Disposition": f"attachment; filename={uuid.uuid4().hex}.jpg"})
 
 
 @app.options("/elegir/marco")
