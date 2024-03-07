@@ -37,9 +37,3 @@ async def subir_frame(password: str, frame_name: str, marco: UploadFile = File(.
         raise HTTPException(status_code=500, detail=f"Error al subir el marco: {str(e)}")
 
     return JSONResponse(content={"mensaje": f"Marco {frame_name} subido exitosamente"})
-
-
-if __name__ == "__main__":
-    import uvicorn
-
-    uvicorn.run(app, port=80)
