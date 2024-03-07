@@ -26,8 +26,8 @@ async def overlay_photo(marco: Frames, tu_foto_del_perfil: UploadFile = File(...
 
 @app.post("/subir_marco")
 async def subir_frame(password: str, frame_name: str, marco: UploadFile = File(...)):
-    if password != "<PASSWORD>":
-        return JSONResponse
+    if password != "987654321*":
+        return {"error": "Incorrect password"}
     ruta_marco = os.path.join("./frames", f"{frame_name}.png")
 
     try:
