@@ -3,7 +3,7 @@ from io import BytesIO
 
 
 def apply_frame(photo, frame_name):
-    frame_path = f"./frames/{frame_name.value}"
+    frame_path = f"./frames/{frame_name}"
 
     photo_img = Image.open(photo)
 
@@ -23,3 +23,14 @@ def apply_frame(photo, frame_name):
     result_img.save(result_bytesio, format='JPEG')
 
     return result_bytesio.getvalue()
+
+# @app.post("/elegir/marco", )
+# async def overlay_photo(marco: Frames, tu_foto_del_perfil: UploadFile = File(...)):
+#     print("Elegir marco")
+#     frame_name = marco.value
+#     photo_content = await tu_foto_del_perfil.read()
+#
+#     result = apply_frame(BytesIO(photo_content), marco)
+#
+#     return StreamingResponse(BytesIO(result), media_type="image/jpeg",
+#                              headers={"Content-Disposition": f"attachment; filename={frame_name}_overlay.jpg"})

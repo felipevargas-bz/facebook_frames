@@ -1,27 +1,44 @@
-from fastapi import FastAPI, File, UploadFile, HTTPException
+from fastapi import FastAPI, HTTPException, Form, UploadFile, File
 from fastapi.responses import JSONResponse
-from fastapi.responses import StreamingResponse
 from function import apply_frame
 from io import BytesIO
 from enum import Enum
+from fastapi.middleware.cors import CORSMiddleware
 import os
+from fastapi.responses import StreamingResponse
 
 app = FastAPI(description="Usa el marco tu team en Facebook", summary="Elige tu Team en Facebook")
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
-class Frames(str, Enum):
-    natty = "natty.png"
-    caro = "caro.png"
+@app.post("/elegir/marco")
+async def overlay_photo(
+    marco: str = Form(...),
+    tu_foto_del_perfil: UploadFile = File(...),
+):
+    frame_name = marco
+    photo_content = tu_foto_del_perfil.file.read()
+
+    # Resto de tu código para aplicar el marco y devolver la respuesta
+    result = apply_frame(BytesIO(photo_content), frame_name)
+
+    return StreamingResponse(BytesIO(result), media_type="image/jpeg",
+                             headers={"Content-Disposition": f"attachment; filename={frame_name}_overlay.jpg"})
 
 
-@app.post("/elegir/marco", )
-async def overlay_photo(marco: Frames, tu_foto_del_perfil: UploadFile = File(...)):
-    frame_name = marco.value
-    photo_content = await tu_foto_del_perfil.read()
-
-    result = apply_frame(BytesIO(photo_content), marco)
-
-    return StreamingResponse(BytesIO(result), media_type="image/jpeg", headers={"Content-Disposition": f"attachment; filename={frame_name}_overlay.jpg"})
+@app.options("/elegir/marco")
+async def preflight_marco():
+    headers = {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "POST, OPTIONS",
+    }
+    return JSONResponse(content="ok", headers=headers)
 
 
 @app.post("/subir_marco")

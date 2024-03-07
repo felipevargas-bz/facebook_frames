@@ -1,5 +1,4 @@
-fastapi
-uvicorn
+fastapi[all]
 Pillow
 python-multipart
 gunicorn==20.1.0
