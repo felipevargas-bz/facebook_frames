@@ -2,7 +2,6 @@ from fastapi import FastAPI, HTTPException, Form, UploadFile, File
 from fastapi.responses import JSONResponse
 from function import apply_frame
 from io import BytesIO
-from enum import Enum
 from fastapi.middleware.cors import CORSMiddleware
 import os
 from fastapi.responses import StreamingResponse
