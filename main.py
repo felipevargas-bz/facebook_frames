@@ -27,9 +27,10 @@ async def overlay_photo(
 
     # Resto de tu código para aplicar el marco y devolver la respuesta
     result = apply_frame(BytesIO(photo_content), frame_name)
+    file_name = f"{uuid.uuid4().hex}.jpg"
 
     return StreamingResponse(BytesIO(result), media_type="image/jpeg",
-                             headers={"Content-Disposition": f"attachment; filename={uuid.uuid4().hex}.jpg"})
+                             headers={"Content-Disposition": f"attachment; filename={file_name}"})
 
 
 @app.options("/elegir/marco")
