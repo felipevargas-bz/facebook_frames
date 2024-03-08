@@ -2,3 +2,6 @@ fastapi[all]
 Pillow
 python-multipart
 gunicorn==20.1.0
+sqlalchemy
+databases
+aiosqlite
