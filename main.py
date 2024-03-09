@@ -68,15 +68,15 @@ async def get_teams():
     return await database.fetch_all(query)
 
 
-@app.put("/teams/vote/{team_name}")
-async def vote_for_team(team_name: str):
-    query = teams.update().where(teams.c.name == team_name).values({"votes": teams.c.votes + 1})
-    updated_rows = await database.execute(query)
-
-    if updated_rows == 0:
-        raise HTTPException(status_code=404, detail="Equipo no encontrado")
-
-    return {"message": f"Voto exitoso para el equipo {team_name}"}
+# @app.put("/teams/vote/{team_name}")
+# async def vote_for_team(team_name: str):
+#     query = teams.update().where(teams.c.name == team_name).values({"votes": teams.c.votes + 1})
+#     updated_rows = await database.execute(query)
+#
+#     if updated_rows == 0:
+#         raise HTTPException(status_code=404, detail="Equipo no encontrado")
+#
+#     return {"message": f"Voto exitoso para el equipo {team_name}"}
 
 
 @app.post("/elegir/marco")
